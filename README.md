@@ -1,8 +1,8 @@
-# EPassport
+# Hakbayan
 
 **Introduction**
 
-The E-Passport app is designed to streamline communication and organization within the Boy Scouts community.
+The Hakbayan app is designed to streamline communication and organization within the Boy Scouts community.
 Tailored for both members and administrators, this application serves as a central hub for essential information and updates.
 
 **Purpose of the App**

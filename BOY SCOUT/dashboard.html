@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eagle Scout Association</title>
+    <link rel="stylesheet" href="dashboard.css"> <!-- Link to your CSS file -->
+    <style>
+        /* ...existing code... */
+        .merit-badges-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          grid-template-rows: repeat(2, 1fr);
+          gap: 18px;
+          margin: 32px auto;
+          max-width: 700px;
+        }
+        .badge-box {
+          background: #f8f8f8;
+          border-radius: 12px;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          font-size: 16px;
+          font-weight: bold;
+          /* Make square */
+          aspect-ratio: 1 / 1;
+          width: 100%;
+          min-width: 0;
+          min-height: 0;
+          padding: 0;
+        }
+        /* Responsive for mobile */
+        @media (max-width: 600px) {
+          .merit-badges-grid {
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            gap: 12px;
+          }
+          .badge-box {
+            font-size: 14px;
+            aspect-ratio: 1 / 1;
+            width: 100%;
+            min-width: 0;
+            min-height: 0;
+            padding: 0;
+          }
+        }
+        .header-info-box {
+          background: #e1f5fe;
+          border-left: 6px solid #01579b;
+          padding: 10px 15px;
+          margin: 10px 0;
+          border-radius: 4px;
+          font-size: 14px;
+        }
+        .header-info-box div {
+          margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    
+    
+    <!-- Dashboard Page -->
+    <div class="dashboard-container">
+        <header style="position: relative;">
+            <h1>Hello, Scout!</h1>
+            <p>You're making great progress this month. Keep up the good work!</p>
+            <div class="header-info-box" style="display: flex; flex-direction: row; gap: 10px; flex-wrap: wrap; background: none; border: none; padding: 0; margin: 10px 0;">
+                <div class="info-item" style="background:#fff;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,0.07);padding:8px 14px;display:inline-block;white-space:nowrap;">
+                    <span style="font-weight:bold;">Rank:</span>
+                    <span><!-- Rank value here --></span>
+                </div>
+                <div class="info-item" style="background:#fff;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,0.07);padding:8px 14px;display:inline-block;white-space:nowrap;">
+                    <span style="font-weight:bold;">Position:</span>
+                    <span><!-- Position value here --></span>
+                </div>
+                <div class="info-item" style="background:#fff;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,0.07);padding:8px 14px;display:inline-block;white-space:nowrap;">
+                    <span style="font-weight:bold;">Serial Number#:</span>
+                    <span><!-- Serial Number here --></span>
+                </div>
+            </div>
+            <!-- Toggle menu button and menu -->
+            <button id="toggleBtn" style="position: absolute; top: 16px; right: 16px; background: #435A48; color: #fff; border: none; border-radius: 6px; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; z-index: 20;">
+                &#9776;
+            </button>
+            <div id="toggleMenu" style="display:none; position: absolute; top: 60px; right: 16px; background: #fff; color: #222; border-radius: 10px; box-shadow: 0 4px 16px rgba(0,0,0,0.18); min-width: 220px; z-index: 30; padding: 16px 18px;">
+                <ul id="toggleMenuList" style="list-style:none; padding:0; margin:0;">
+                    <li style="margin-bottom:12px;">
+                        <a href="#" id="menu-mission" onclick="showContent('mission', this); return false;" style="color:inherit;text-decoration:none;display:block;padding:6px 8px;border-radius:6px;"><strong>Mission & Vision</strong></a>
+                    </li>
+                    <li style="margin-bottom:12px;">
+                        <a href="#" id="menu-oath" onclick="showContent('oath', this); return false;" style="color:inherit;text-decoration:none;display:block;padding:6px 8px;border-radius:6px;">Scout Oath</a>
+                    </li>
+                    <li style="margin-bottom:12px;">
+                        <a href="#" id="menu-law" onclick="showContent('law', this); return false;" style="color:inherit;text-decoration:none;display:block;padding:6px 8px;border-radius:6px;">Scout Law</a>
+                    </li>
+                    <li style="margin-bottom:12px;">
+                        <a href="#" id="menu-code" onclick="showContent('code', this); return false;" style="color:inherit;text-decoration:none;display:block;padding:6px 8px;border-radius:6px;">Senior Scout Code</a>
+                    </li>
+                    <li style="margin-bottom:12px;">
+                        <a href="#" id="menu-uniform" onclick="showContent('uniform', this); return false;" style="color:inherit;text-decoration:none;display:block;padding:6px 8px;border-radius:6px;">Proper Uniform Attire</a>
+                    </li>
+                    <li style="margin-bottom:12px;">
+                        <a href="#" id="menu-about" onclick="showContent('about', this); return false;" style="color:inherit;text-decoration:none;display:block;padding:6px 8px;border-radius:6px;">About</a>
+                    </li>
+                    <li>
+                        <button onclick="alert('Log Out');" style="background:#e74c3c;color:#fff;border:none;border-radius:5px;padding:7px 16px;font-weight:bold;cursor:pointer;width:100%;">Log Out</button>
+                    </li>
+                </ul>
+            </div>
+        </header>
+
+        <div class="merit-badges">
+            <h2>Merit Badges</h2>
+            <div class="merit-badges-grid">
+                <div class="badge-box" onclick="showRankDetail('explorer')">Explorer Rank</div>
+                <div class="badge-box" onclick="showRankDetail('pathfinder')">Pathfinder Rank</div>
+                <div class="badge-box" onclick="showRankDetail('outdoors')">Outdoors Track</div>
+                <div class="badge-box" onclick="showRankDetail('venture')">Venture Rank</div>
+                <div class="badge-box" onclick="showRankDetail('land')">Land Scout Track</div>
+                <div class="badge-box" onclick="showRankDetail('air')">Air Scout Track</div>
+                <div class="badge-box" onclick="showRankDetail('sea')">Seascout Track</div>
+                <div class="badge-box" onclick="showRankDetail('eagle')">Eagle Scout</div>
+            </div>
+        </div>
+
+        <section class="progress">
+            <h2>Your Progress</h2>
+            <div class="progress-bar">
+                <span>Merit Badges: 60%</span>
+                <div class="progress-fill" style="width: 60%;"></div>
+            </div>
+            <div class="progress-bar">
+                <span>Service Hours: 30%</span>
+                <div class="progress-fill" style="width: 30%;"></div>
+            </div>
+            <div class="progress-bar">
+                <span>Leadership Points: 40%</span>
+                <div class="progress-fill" style="width: 40%;"></div>
+            </div>
+        </section>
+
+        <section class="upcoming-events">
+            <h2>Upcoming Events</h2>
+            <ul>
+                <li>15 JUN - Summer Camp</li>
+                <li>21 JUN - Merit Badge Workshop</li>
+                <li>16 JUL - Community Service Project</li>
+            </ul>
+        </section>
+        <section class="announcements" id="announcementsSection" style="background:#fff; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.1); padding:15px; margin:15px 0; display:none;">
+            <h2>Announcements</h2>
+            <div id="announcementList"></div>
+            <div id="adminPostArea" style="margin-top:16px; display:none;">
+                <textarea id="announcementInput" rows="3" style="width:100%;border-radius:6px;border:1px solid #ccc;padding:8px;resize:vertical;" placeholder="Write an announcement..."></textarea>
+                <input type="text" id="announcementTitle" style="width:100%;margin-top:8px;border-radius:6px;border:1px solid #ccc;padding:8px;" placeholder="Enter announcement title (optional)">
+                <button onclick="postAnnouncement()" style="margin-top:8px;background:#435A48;color:#fff;border:none;border-radius:5px;padding:8px 18px;font-weight:bold;cursor:pointer;">Post</button>
+            </div>
+        </section>
+    </div>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    var toggleBtn = document.getElementById('toggleBtn');
+    var toggleMenu = document.getElementById('toggleMenu');
+    if (toggleBtn && toggleMenu) {
+        toggleBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            toggleMenu.style.display = (toggleMenu.style.display === 'block') ? 'none' : 'block';
+        });
+        document.addEventListener('click', function(e) {
+            if (toggleMenu.style.display === 'block' && !toggleMenu.contains(e.target) && e.target !== toggleBtn) {
+                toggleMenu.style.display = 'none';
+            }
+        });
+    }
+});
+const contentData = {
+    mission: `<h3>Mission & Vision</h3>
+        <p><strong>Mission:</strong> To help the youth develop values and acquire competencies to become responsible citizens and capable leaders anchored on the Scout Oath and Law.</p>
+        <p><strong>Vision:</strong> Foremost in preparing the youth to become agents of change in communities, guided by the Scout Oath and Law.</p>`,
+    oath: `<h3>Scout Oath</h3>
+        <p>
+        On my honor, I will do my best<br>
+        To do my duty to God and my country,<br>
+        the Republic of the Philippines,<br>
+        and to obey the Scout Law;<br>
+        To help other people at all times;<br>
+        To keep myself physically strong,<br>
+        mentally awake, and morally straight.
+        </p>`,
+    law: `<h3>Scout Law</h3>
+        <ol>
+            <li>A Scout is Trustworthy</li>
+            <li>Loyal</li>
+            <li>Helpful</li>
+            <li>Friendly</li>
+            <li>Courteous</li>
+            <li>Kind</li>
+            <li>Obedient</li>
+            <li>Cheerful</li>
+            <li>Thrifty</li>
+            <li>Brave</li>
+            <li>Clean</li>
+            <li>Reverent</li>
+        </ol>`,
+    code: `<h3>Senior Scout Code</h3>
+        <p>As a Senior Scout, I will live by the Scout Oath and Law and the Senior Scout Code.</p>
+        <ul>
+            <li>I will be trustworthy and loyal.</li>
+            <li>I will be helpful and friendly.</li>
+            <li>I will be courteous and kind.</li>
+            <li>I will be obedient and cheerful.</li>
+            <li>I will be thrifty and brave.</li>
+            <li>I will be clean and reverent.</li>
+        </ul>`,
+    uniform: `<h3>Proper Uniform Attire</h3>
+        <p>Wear the official uniform with pride and respect, following the guidelines set by the association. The uniform should be clean, complete, and worn properly during all scouting activities and ceremonies.</p>`,
+    about: `<h3>About</h3>
+        <p>
+        At the Boy Scouts, we believe in empowering young individuals to become responsible, engaged, and capable leaders in their communities. Founded on the principles of trust, loyalty, and service, our organization has been a cornerstone of youth development for over a century.
+        </p>`
+};
+
+function showContent(key, el) {
+    var modal = document.getElementById('contentModal');
+    var area = document.getElementById('contentArea');
+    area.innerHTML = contentData[key] || '<p>No content available.</p>';
+    modal.style.display = 'flex';
+    highlightMenu(el);
+}
+function closeContentModal() {
+    document.getElementById('contentModal').style.display = 'none';
+    highlightMenu(null);
+}
+function highlightMenu(el) {
+    var ids = ['menu-mission','menu-oath','menu-law','menu-code','menu-uniform','menu-about'];
+    ids.forEach(function(id){
+        var item = document.getElementById(id);
+        if(item){
+            item.style.background = '';
+            item.style.color = '';
+        }
+    });
+    if (el) {
+        el.style.background = 'rgba(128,128,128,0.7)';
+        el.style.color = '#fff';
+    }
+}
+</script>
+<!-- Add this modal for showing content if not present -->
+<div id="contentModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.35); z-index:1000; align-items:center; justify-content:center;">
+    <div style="background:#fff; border-radius:12px; max-width:340px; width:90vw; margin:auto; padding:24px 18px; box-shadow:0 2px 8px rgba(0,0,0,0.15); position:relative;">
+        <button onclick="closeContentModal()" style="position:absolute;top:10px;right:10px;background:none;border:none;font-size:20px;cursor:pointer;">&times;</button>
+        <div id="contentArea"></div>
+    </div>
+</div>
+<!-- Add this modal for rank details if not present -->
+<div id="rankModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.35); z-index:1000; align-items:center; justify-content:center;">
+    <div style="background:#fff; border-radius:12px; max-width:340px; width:90vw; margin:auto; padding:24px 18px; box-shadow:0 2px 8px rgba(0,0,0,0.15); position:relative;">
+        <button onclick="closeRankModal()" style="position:absolute;top:10px;right:10px;background:none;border:none;font-size:20px;cursor:pointer;">&times;</button>
+        <div id="rankContent"></div>
+    </div>
+</div>
+<script>
+const rankDescriptions = {
+    explorer: `<h3>Explorer Rank</h3>
+        <p>The Explorer Rank is the entry-level rank for scouts. Requirements include learning basic scouting skills, participating in troop activities, and demonstrating the Scout Oath and Law.</p>`,
+    pathfinder: `<h3>Pathfinder Rank</h3>
+        <p>The Pathfinder Rank is awarded to scouts who have advanced their skills and knowledge, completed required merit badges, and shown leadership in their patrol.</p>`,
+    outdoors: `<h3>Outdoors Track</h3>
+        <p>The Outdoors Track focuses on outdoor skills, camping, hiking, and environmental stewardship. Scouts must complete specific outdoor activities and badges to earn this track.</p>`,
+    venture: `<h3>Venture Rank</h3>
+        <p>The Venture Rank is for scouts who have demonstrated advanced leadership, service, and outdoor skills. It requires completion of venture-specific requirements and activities.</p>`,
+    land: `<h3>Land Scout Track</h3>
+        <p>The Land Scout Track emphasizes land navigation, survival, and conservation. Scouts must complete land-based activities and merit badges to achieve this track.</p>`,
+    air: `<h3>Air Scout Track</h3>
+        <p>The Air Scout Track introduces scouts to aviation, aerodynamics, and air navigation. Requirements include air-related activities and badges.</p>`,
+    sea: `<h3>Seascout Track</h3>
+        <p>The Seascout Track focuses on water safety, boating, and maritime skills. Scouts complete water-based activities and merit badges to earn this track.</p>`,
+    eagle: `<h3>Eagle Scout</h3>
+        <p>The Eagle Scout is the highest rank, awarded to scouts who have demonstrated exceptional leadership, service, and mastery of scouting skills. It requires completion of all previous ranks and a significant service project.</p>`
+};
+
+function showRankDetail(rankKey) {
+    var modal = document.getElementById('rankModal');
+    var area = document.getElementById('rankContent');
+    area.innerHTML = rankDescriptions[rankKey] || '<p>No description available for this rank.</p>';
+    modal.style.display = 'flex';
+}
+function closeRankModal() {
+    document.getElementById('rankModal').style.display = 'none';
+}
+</script>
+</body>
+</html>

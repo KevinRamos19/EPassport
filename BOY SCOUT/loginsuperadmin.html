@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Super Admin Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="logindesign.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background: #f4f4f4;
+      font-family: 'Inter', Arial, sans-serif;
+    }
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      background: #f4f4f4;
+      position: relative;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      width: 100vw;
+      height: 100vh;
+      background: url('assets/bg.png') no-repeat center center/cover;
+      z-index: -1;
+      pointer-events: none;
+    }
+    .dashboard-container {
+      width: 100vw;
+      max-width: 400px;
+      min-height: 100vh;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      position: relative;
+      height: 100vh;
+      box-sizing: border-box;
+      overflow: auto;
+    }
+    .header-flex {
+      width: 100%;
+      background: #435A48;
+      padding: 32px 0 24px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0;
+      border-top-left-radius: 18px;
+      border-top-right-radius: 18px;
+      box-shadow: 0 2px 12px rgba(30,144,255,0.08);
+    }
+    .logo {
+      width: 54px;
+      height: 54px;
+      background: #435A48;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: #000;
+      overflow: hidden;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 8px rgba(30,144,255,0.10);
+    }
+    .logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .header-title-vertical {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.1;
+      color: #000;
+      letter-spacing: 0.5px;
+      text-shadow: none;
+    }
+    .header-title-vertical span {
+      display: block;
+    }
+    .login-container {
+      width: 100%;
+      max-width: 100%;
+      min-height: unset;
+      background: none;
+      border-radius: 0;
+      box-shadow: none;
+      padding: 24px 12px 12px 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: stretch;
+      position: relative;
+      margin-top: 0;
+      z-index: 2;
+      flex: 1 1 auto;
+      height: 100%;
+      box-sizing: border-box;
+    }
+    .login-form-box {
+      background: #D9D9D9;
+      border-radius: 12px;
+      padding: 18px 14px 14px 14px;
+      margin-bottom: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      box-sizing: border-box;
+    }
+    .footer {
+      margin-top: 24px;
+      text-align: center;
+      color: #888;
+      font-size: 14px;
+      font-style: italic;
+      letter-spacing: 0.2px;
+    }
+    .admin-panel {
+      background: #f7f7f7;
+      border-radius: 12px;
+      padding: 18px 14px 14px 14px;
+      margin: 18px 0 0 0;
+      box-shadow: 0 2px 8px rgba(30,144,255,0.06);
+    }
+    .admin-panel h3 {
+      margin-top: 0;
+      font-size: 18px;
+      color: #435A48;
+    }
+    .admin-panel label {
+      font-size: 14px;
+      color: #222;
+      margin-bottom: 4px;
+      display: block;
+    }
+    .admin-panel input, .admin-panel textarea {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+    .admin-panel button {
+      background: #435A48;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 0;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    .admin-panel .list {
+      margin-top: 10px;
+    }
+    .admin-panel .list-item {
+      background: #fff;
+      border-radius: 6px;
+      padding: 8px 10px;
+      margin-bottom: 6px;
+      font-size: 14px;
+      color: #222;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container" id="mainContainer">
+    <div class="header-flex">
+      <div class="logo">
+        <img src="assets/logo.png" alt="Logo" onerror="this.style.display='none';this.parentNode.textContent='Logo';">
+      </div>
+      <div class="header-title-vertical">
+        <span>Super Admin</span>
+        <span>National Eagle Scout Association</span>
+        <span>of the Philippines</span>
+      </div>
+    </div>
+    <div class="login-container" id="loginSection">
+      <div class="login-form-box">
+        <form id="superAdminLoginForm" autocomplete="off">
+          <label for="admin-username">Username</label>
+          <div class="input-group">
+            <i class="fa fa-user"></i>
+            <input type="text" id="admin-username" name="username" required placeholder="Enter your username">
+          </div>
+          <label for="admin-password">Password</label>
+          <div class="input-group">
+            <i class="fa fa-lock"></i>
+            <input type="password" id="admin-password" name="password" required placeholder="Enter your password">
+          </div>
+          <button type="submit">Login as Super Admin</button>
+        </form>
+      </div>
+      <div class="footer">Super Admin Portal</div>
+    </div>
+    <div class="admin-panel" id="adminPanel" style="display:none;">
+      <!-- Add Student Enrolled in Badges Section -->
+      <h3>Add Student Enrolled in Badge</h3>
+      <label for="student-name">Student Name</label>
+      <input type="text" id="student-name" placeholder="Student Name">
+      <label for="student-badge">Badge</label>
+      <input type="text" id="student-badge" placeholder="Badge Name">
+      <label for="student-date">Date Enrolled</label>
+      <input type="date" id="student-date">
+      <button onclick="addStudentEnrollment()">Add Enrollment</button>
+      <div class="list" id="studentEnrollList"></div>
+      <!-- List of all students enrolled in badges (table) -->
+      <div style="margin-top:18px;">
+        <h3>All Enrolled Students</h3>
+        <table style="width:100%;border-collapse:collapse;background:#fff;border-radius:8px;overflow:hidden;font-size:14px;">
+          <thead>
+            <tr style="background:#D9D9D9;">
+              <th style="padding:8px 6px;text-align:left;">Student</th>
+              <th style="padding:8px 6px;text-align:left;">Badge</th>
+              <th style="padding:8px 6px;text-align:left;">Date</th>
+            </tr>
+          </thead>
+          <tbody id="studentEnrollTable">
+            <!-- Populated by JS -->
+          </tbody>
+        </table>
+      </div>
+      <hr style="margin:18px 0;">
+      <h3>Post Announcement</h3>
+      <label for="announcement-title">Title</label>
+      <input type="text" id="announcement-title" placeholder="Announcement Title">
+      <label for="announcement-body">Body</label>
+      <textarea id="announcement-body" rows="3" placeholder="Write your announcement..."></textarea>
+      <button onclick="postAnnouncement()">Post Announcement</button>
+      <div class="list" id="announcementList"></div>
+      <hr style="margin:18px 0;">
+      <h3>Add Event</h3>
+      <label for="event-title">Event Title</label>
+      <input type="text" id="event-title" placeholder="Event Title">
+      <label for="event-date">Event Date</label>
+      <input type="date" id="event-date">
+      <button onclick="addEvent()">Add Event</button>
+      <div class="list" id="eventList"></div>
+    </div>
+  </div>
+  <script>
+    // Simple demo login (username: admin, password: admin123)
+    document.getElementById('superAdminLoginForm').onsubmit = function(e) {
+      e.preventDefault();
+      var user = document.getElementById('admin-username').value.trim();
+      var pass = document.getElementById('admin-password').value.trim();
+      if (user === 'admin' && pass === 'admin123') {
+        document.getElementById('loginSection').style.display = 'none';
+        document.getElementById('adminPanel').style.display = 'block';
+        showAdminPanel();
+      } else {
+        alert('Invalid credentials!');
+      }
+    };
+
+    // Announcement posting
+    function postAnnouncement() {
+      var title = document.getElementById('announcement-title').value.trim();
+      var body = document.getElementById('announcement-body').value.trim();
+      if (!title && !body) {
+        alert('Please enter a title or body for the announcement.');
+        return;
+      }
+      var list = document.getElementById('announcementList');
+      var div = document.createElement('div');
+      div.className = 'list-item';
+      div.innerHTML = '<strong>' + (title || '(No Title)') + '</strong><br>' + (body || '');
+      list.prepend(div);
+      document.getElementById('announcement-title').value = '';
+      document.getElementById('announcement-body').value = '';
+    }
+
+    // Event adding
+    function addEvent() {
+      var title = document.getElementById('event-title').value.trim();
+      var date = document.getElementById('event-date').value;
+      if (!title || !date) {
+        alert('Please enter both event title and date.');
+        return;
+      }
+      var list = document.getElementById('eventList');
+      var div = document.createElement('div');
+      div.className = 'list-item';
+      div.innerHTML = '<strong>' + title + '</strong> <span style="float:right;">' + date + '</span>';
+      list.prepend(div);
+      document.getElementById('event-title').value = '';
+      document.getElementById('event-date').value = '';
+    }
+
+    // Student Enrollment logic
+    function addStudentEnrollment() {
+      var name = document.getElementById('student-name').value.trim();
+      var badge = document.getElementById('student-badge').value.trim();
+      var date = document.getElementById('student-date').value;
+      if (!name || !badge || !date) {
+        alert('Please enter student name, badge, and date.');
+        return;
+      }
+      var enrollments = JSON.parse(localStorage.getItem('badgeEnrollments') || '[]');
+      enrollments.unshift({ user: name, badge: badge, date: date });
+      localStorage.setItem('badgeEnrollments', JSON.stringify(enrollments));
+      renderStudentEnrollments();
+      renderStudentEnrollTable();
+      document.getElementById('student-name').value = '';
+      document.getElementById('student-badge').value = '';
+      document.getElementById('student-date').value = '';
+    }
+
+    function renderStudentEnrollments() {
+      var enrollments = JSON.parse(localStorage.getItem('badgeEnrollments') || '[]');
+      var list = document.getElementById('studentEnrollList');
+      list.innerHTML = '';
+      if (enrollments.length === 0) {
+        list.innerHTML = '<div style="color:#888;">No enrollments yet.</div>';
+      } else {
+        enrollments.forEach(function(e) {
+          var div = document.createElement('div');
+          div.className = 'list-item';
+          div.innerHTML = `<strong>${e.user}</strong> - ${e.badge} <span style="float:right;">${e.date}</span>`;
+          list.appendChild(div);
+        });
+      }
+    }
+
+    function renderStudentEnrollTable() {
+      var enrollments = JSON.parse(localStorage.getItem('badgeEnrollments') || '[]');
+      var tbody = document.getElementById('studentEnrollTable');
+      tbody.innerHTML = '';
+      if (enrollments.length === 0) {
+        var tr = document.createElement('tr');
+        tr.innerHTML = '<td colspan="3" style="color:#888;padding:8px;">No enrollments yet.</td>';
+        tbody.appendChild(tr);
+      } else {
+        enrollments.forEach(function(e) {
+          var tr = document.createElement('tr');
+          tr.innerHTML = `<td style="padding:8px 6px;">${e.user}</td><td style="padding:8px 6px;">${e.badge}</td><td style="padding:8px 6px;">${e.date}</td>`;
+          tbody.appendChild(tr);
+        });
+      }
+    }
+
+    // Call on admin panel show
+    function showAdminPanel() {
+      renderStudentEnrollments();
+      renderStudentEnrollTable();
+      // ...existing code if needed...
+    }
+
+    // Call renderStudentEnrollments when admin panel is shown
+    document.getElementById('superAdminLoginForm').onsubmit = function(e) {
+      e.preventDefault();
+      var user = document.getElementById('admin-username').value.trim();
+      var pass = document.getElementById('admin-password').value.trim();
+      if (user === 'admin' && pass === 'admin123') {
+        document.getElementById('loginSection').style.display = 'none';
+        document.getElementById('adminPanel').style.display = 'block';
+        showAdminPanel();
+      } else {
+        alert('Invalid credentials!');
+      }
+    };
+
+    // Announcement posting
+    function postAnnouncement() {
+      var title = document.getElementById('announcement-title').value.trim();
+      var body = document.getElementById('announcement-body').value.trim();
+      if (!title && !body) {
+        alert('Please enter a title or body for the announcement.');
+        return;
+      }
+      var list = document.getElementById('announcementList');
+      var div = document.createElement('div');
+      div.className = 'list-item';
+      div.innerHTML = '<strong>' + (title || '(No Title)') + '</strong><br>' + (body || '');
+      list.prepend(div);
+      document.getElementById('announcement-title').value = '';
+      document.getElementById('announcement-body').value = '';
+    }
+
+    // Event adding
+    function addEvent() {
+      var title = document.getElementById('event-title').value.trim();
+      var date = document.getElementById('event-date').value;
+      if (!title || !date) {
+        alert('Please enter both event title and date.');
+        return;
+      }
+      var list = document.getElementById('eventList');
+      var div = document.createElement('div');
+      div.className = 'list-item';
+      div.innerHTML = '<strong>' + title + '</strong> <span style="float:right;">' + date + '</span>';
+      list.prepend(div);
+      document.getElementById('event-title').value = '';
+      document.getElementById('event-date').value = '';
+    }
+
+    // Student Enrollment logic
+    function addStudentEnrollment() {
+      var name = document.getElementById('student-name').value.trim();
+      var badge = document.getElementById('student-badge').value.trim();
+      var date = document.getElementById('student-date').value;
+      if (!name || !badge || !date) {
+        alert('Please enter student name, badge, and date.');
+        return;
+      }
+      var enrollments = JSON.parse(localStorage.getItem('badgeEnrollments') || '[]');
+      enrollments.unshift({ user: name, badge: badge, date: date });
+      localStorage.setItem('badgeEnrollments', JSON.stringify(enrollments));
+      renderStudentEnrollments();
+      renderStudentEnrollTable();
+      document.getElementById('student-name').value = '';
+      document.getElementById('student-badge').value = '';
+      document.getElementById('student-date').value = '';
+    }
+
+    function renderStudentEnrollments() {
+      var enrollments = JSON.parse(localStorage.getItem('badgeEnrollments') || '[]');
+      var list = document.getElementById('studentEnrollList');
+      list.innerHTML = '';
+      if (enrollments.length === 0) {
+        list.innerHTML = '<div style="color:#888;">No enrollments yet.</div>';
+      } else {
+        enrollments.forEach(function(e) {
+          var div = document.createElement('div');
+          div.className = 'list-item';
+          div.innerHTML = `<strong>${e.user}</strong> - ${e.badge} <span style="float:right;">${e.date}</span>`;
+          list.appendChild(div);
+        });
+      }
+    }
+
+    function renderStudentEnrollTable() {
+      var enrollments = JSON.parse(localStorage.getItem('badgeEnrollments') || '[]');
+      var tbody = document.getElementById('studentEnrollTable');
+      tbody.innerHTML = '';
+      if (enrollments.length === 0) {
+        var tr = document.createElement('tr');
+        tr.innerHTML = '<td colspan="3" style="color:#888;padding:8px;">No enrollments yet.</td>';
+        tbody.appendChild(tr);
+      } else {
+        enrollments.forEach(function(e) {
+          var tr = document.createElement('tr');
+          tr.innerHTML = `<td style="padding:8px 6px;">${e.user}</td><td style="padding:8px 6px;">${e.badge}</td><td style="padding:8px 6px;">${e.date}</td>`;
+          tbody.appendChild(tr);
+        });
+      }
+    }
+
+    // Call on admin panel show
+    function showAdminPanel() {
+      renderStudentEnrollments();
+      renderStudentEnrollTable();
+      // ...existing code if needed...
+    }
+  </script>
+</body>
+</html>
